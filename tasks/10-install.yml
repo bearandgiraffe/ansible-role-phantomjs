@@ -1,0 +1,14 @@
+---
+- name: Check if an existing download of PhantomJS exists
+  stat: path=/tmp/{{ phantomjs_file }}{{ phantomjs_ext }}
+  register: phantomjs_local
+
+- name: Download PhantomJS
+  get_url: url=https://bitbucket.org/ariya/phantomjs/downloads/{{ phantomjs_file }}{{ phantomjs_ext }} dest=/tmp/ validate_certs=no sha256sum={{ phantomjs_sha256 }}
+  register: phantomjs_dl
+  when: phantomjs_local.stat.md5 ne {{ phantomjs_md5 }}
+
+- name: Unarchive PhantomJS
+  unarchive: src=/tmp/{{ phantomjs_file }}{{ phantomjs_ext }} dest=/usr/local/bin group=root owner=root mode=0755 copy=no
+  become: yes
+  when: phantomjs_dl|success

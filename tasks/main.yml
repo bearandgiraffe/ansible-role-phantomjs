@@ -1,2 +1,8 @@
 ---
-# tasks file for ansible-role-phantomjs
+# Install PhantomJS
+- name: Check if PhantomJS already exists
+  stat: path=/usr/local/bin/{{ phantomjs_file }}/bin/phantomjs
+  register: phantomjs_exists
+
+- include: 10-install.yml
+  when: phantomjs_exists|failed
