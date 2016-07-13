@@ -1,4 +1,4 @@
-Role Name
+PhantomJS
 =========
 
 Role to install PhantomJS.
@@ -29,8 +29,8 @@ Example Playbook
 ----------------
 
 ```yml
-  - hosts: servers
-    roles:
+- hosts: servers
+  roles:
     - { role: bearandgiraffe.phantomjs, phantomjs_file: phantomjs-2.1.1-linux-x86_64 }
 ```
 
